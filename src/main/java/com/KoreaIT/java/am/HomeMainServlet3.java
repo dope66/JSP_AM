@@ -10,20 +10,32 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/home/printDan")
 public class HomeMainServlet3 extends HttpServlet {
-	
-       
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		String inputDan =request.getParameter("dan");
-		
-		if(inputDan==null) {
+
+		String inputDan = request.getParameter("dan");
+
+		if (inputDan == null) {
 			inputDan = "1";
 		}
+
+		String inputLimit = request.getParameter("limit");
+
+		if (inputLimit == null) {
+			inputLimit = "9";
+		}
+		String inputColor = request.getParameter("color");
+		if (inputColor == null) {
+			inputColor = "red";
+		}
 		int dan = Integer.parseInt(inputDan);
-		response.getWriter().append(String.format("%d단<br />",dan));
-		for( int i =1; i<9; i++) {
-			response.getWriter().append(String.format("%d * %d = %d<br>",dan,i,dan*i));
+		int limit = Integer.parseInt(inputLimit);
+		response.getWriter().append(String.format("<div  style=\"color:%s;\">%d단</div>", inputColor, dan));
+		for (int i = 1; i <= limit; i++) {
+			response.getWriter()
+					.append(String.format("<div style=\"color:%s;\">%d * %d = %d</div>", inputColor, dan, i, dan * i));
 		}
 	}
 }
