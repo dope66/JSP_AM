@@ -1,6 +1,9 @@
 package com.KoreaIT.java.am;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,10 +14,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/home/printDan")
 public class HomePrintDanServlet extends HttpServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.getRequestDispatcher("/jsp/home/printDan.jsp").forward(request, response);
-		
+
+
 	}
 }
-
-
