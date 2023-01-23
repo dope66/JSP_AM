@@ -21,6 +21,8 @@ public class ArticleListServlet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		response.setContentType("text/html; charset=UTF-8");
+		
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -34,11 +36,15 @@ public class ArticleListServlet extends HttpServlet {
 			conn = DriverManager.getConnection(url, "root", "");
 			response.getWriter().append("Success");
 			
-			DBUtil dbUtil = new DBUtil();
 			SecSql sql = new SecSql();
 			
 			sql.append("SELECT *FROM article");
-			List<Map<String,Object>> articlesRows = dbUtil.selectRows(conn, sql);
+//			불러오기
+			List<Map<String,Object>> articlesRows = DBUtil.selectRows(conn, sql);
+//			묶어서 보낸다
+			request.setAttribute("articleRows", articlesRows);
+//			db에 연결하고 jsp에 넘겨주는 거
+			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 			
 			response.getWriter().append(articlesRows.toString());
 		} catch (SQLException e) {
