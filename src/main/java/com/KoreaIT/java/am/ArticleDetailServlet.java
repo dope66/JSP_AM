@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/article/detail")
 public class ArticleDetailServlet extends HttpServlet {
-
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -36,8 +36,8 @@ public class ArticleDetailServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(url, "root", "");
 
-			int id = Integer.parseInt(request.getParameter("id")); 
-			
+			int id = Integer.parseInt(request.getParameter("id"));
+
 			SecSql sql = SecSql.from("SELECT *");
 			sql.append("FROM article");
 			sql.append("WHERE id = ?", id);
@@ -60,6 +60,13 @@ public class ArticleDetailServlet extends HttpServlet {
 			}
 		}
 
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

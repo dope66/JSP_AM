@@ -59,4 +59,14 @@
     <servlet-name>ArticleDoDeleteServlet</servlet-name>
     <url-pattern>/ArticleDoDeleteServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>aaaa</display-name>
+    <servlet-name>aaaa</servlet-name>
+    <servlet-class>com.KoreaIT.java.am.aaaa</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>aaaa</servlet-name>
+    <url-pattern>/aaaa</url-pattern>
+  </servlet-mapping>
 </web-app>

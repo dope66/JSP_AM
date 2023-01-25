@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/article/list")
 public class ArticleListServlet extends HttpServlet {
-
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -79,6 +79,11 @@ public class ArticleListServlet extends HttpServlet {
 			}
 		}
 
+	}
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
