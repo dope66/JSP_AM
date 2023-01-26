@@ -37,7 +37,7 @@ int totalPage = (int)request.getAttribute("totalPage");
 			<td><%=(int) articleRow.get("id")%></td>
 			<td><%=(LocalDateTime) articleRow.get("regDate")%></td>
 			<td><a href="detail?id=<%=(int) articleRow.get("id")%>"><%=(String) articleRow.get("title")%></a></td>
-			<td><a href="doDelete?id=<%=(int) articleRow.get("id")%>">삭제</a></td>
+			<td><a href="doDelete?id=<%=(int) articleRow.get("id")%>" onclick="if(confirm('삭제?')==false) return false;">삭제</a></td>
 		</tr>
 		<% } %>
 
