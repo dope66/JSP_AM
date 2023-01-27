@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import com.KoreaIT.java.am.config.Config;
+import com.KoreaIT.java.am.exception.SQLErrorException;
 import com.KoreaIT.java.am.util.DBUtil;
 import com.KoreaIT.java.am.util.SecSql;
 
@@ -28,37 +30,34 @@ public class ArticleListServlet extends HttpServlet {
 		Connection conn = null;
 
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(Config.getDBDriverClassName());
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
 		}
 
-		String url = "jdbc:mysql://127.0.0.1:3307/JSPTest?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
-
 		try {
-			conn = DriverManager.getConnection(url, "root", "");
-			
-			int page=1;
-			if(request.getParameter("page")!=null&&request.getParameter("page").length()!=0) {
+			conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBUser(), Config.getDBPassword());
+
+			int page = 1;
+			if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
 				page = Integer.parseInt(request.getParameter("page"));
 			}
 			int itemsInAPage = 10;
-			
-			int limitFrom =(page -1)* itemsInAPage;
-			
-			
+
+			int limitFrom = (page - 1) * itemsInAPage;
+
 			SecSql sql = SecSql.from("SELECT COUNT(*)");
 			sql.append("FROM article");
-			
-			int totalCount= DBUtil.selectRowIntValue(conn, sql);
-			int totalPage = (int)Math.ceil((double)totalCount / itemsInAPage);
-			
-			 sql = SecSql.from("SELECT *");
+
+			int totalCount = DBUtil.selectRowIntValue(conn, sql);
+			int totalPage = (int) Math.ceil((double) totalCount / itemsInAPage);
+
+			sql = SecSql.from("SELECT *");
 
 			sql.append("FROM article");
 			sql.append("ORDER BY id DESC");
-			sql.append("LIMIT ?,?",limitFrom, itemsInAPage);
-			
+			sql.append("LIMIT ?,?", limitFrom, itemsInAPage);
+
 			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
 
 			request.setAttribute("page", page);
@@ -69,7 +68,11 @@ public class ArticleListServlet extends HttpServlet {
 
 		} catch (SQLException e) {
 			System.out.println("에러: " + e);
-		} finally {
+		} catch (SQLErrorException e) {
+			e.getOrigin().printStackTrace();
+		}
+
+		finally {
 			try {
 				if (conn != null && !conn.isClosed()) {
 					conn.close();
@@ -80,8 +83,10 @@ public class ArticleListServlet extends HttpServlet {
 		}
 
 	}
+
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

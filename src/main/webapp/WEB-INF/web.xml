@@ -69,4 +69,14 @@
     <servlet-name>aaaa</servlet-name>
     <url-pattern>/aaaa</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MemberJoinServlet</display-name>
+    <servlet-name>MemberJoinServlet</servlet-name>
+    <servlet-class>com.KoreaIT.java.am.MemberJoinServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberJoinServlet</servlet-name>
+    <url-pattern>/MemberJoinServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
