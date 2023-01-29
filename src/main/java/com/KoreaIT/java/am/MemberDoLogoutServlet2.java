@@ -8,29 +8,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-@WebServlet("/home/main")
-public class MainPageServlet extends HttpServlet {
+@WebServlet("/member/doLogout")
+public class MemberDoLogoutServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=UTF-8");
 		
 		HttpSession session = request.getSession();
-		boolean isLogined =false;
-		int loginedMemberId  = -1;
-		if(session.getAttribute("loginedMemberLoginId")!=null) {
-			loginedMemberId = (int)session.getAttribute("loginedMemberId");
-			isLogined=true;
-		}
-		request.setAttribute("isLogined", isLogined);
-		request.setAttribute("loginedMemberId", loginedMemberId);
+		session.removeAttribute("loginMemberId");
+		session.removeAttribute("loginedMemberLoginId");
 		
-		request.getRequestDispatcher("/jsp/home/main.jsp").forward(request, response);
-		
+		response.getWriter().append(String.format("<script>alert('로그아웃 되었씁니다..'); location.replace('../home/main');</script>"));
 	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
