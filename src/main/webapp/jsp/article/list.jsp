@@ -29,7 +29,8 @@ int totalPage = (int) request.getAttribute("totalPage");
 			<th>번호</th>
 			<th>날짜</th>
 			<th>제목</th>
-			<th>삭제</th>
+			<th>작성자</th>
+
 		</tr>
 		<%
 		for (Map<String, Object> articleRow : articleRows) {
@@ -38,8 +39,8 @@ int totalPage = (int) request.getAttribute("totalPage");
 			<td><%=(int) articleRow.get("id")%></td>
 			<td><%=(LocalDateTime) articleRow.get("regDate")%></td>
 			<td><a href="detail?id=<%=(int) articleRow.get("id")%>"><%=(String) articleRow.get("title")%></a></td>
-			<td><a href="doDelete?id=<%=(int) articleRow.get("id")%>"
-				onclick="if(confirm('삭제?')==false) return false;">삭제</a></td>
+			<td><%= articleRow.get("writerName")%></td>
+
 		</tr>
 		<%
 		}

@@ -52,10 +52,12 @@ public class ArticleListServlet extends HttpServlet {
 			int totalCount = DBUtil.selectRowIntValue(conn, sql);
 			int totalPage = (int) Math.ceil((double) totalCount / itemsInAPage);
 
-			sql = SecSql.from("SELECT *");
+			sql = SecSql.from("SELECT A.*,M.name AS writerName");
 
-			sql.append("FROM article");
-			sql.append("ORDER BY id DESC");
+			sql.append("FROM article AS A");
+			sql.append("INNER JOIN `member` AS M");
+			sql.append("ON A.memberId= M.id");
+			sql.append("ORDER BY A.id DESC");
 			sql.append("LIMIT ?,?", limitFrom, itemsInAPage);
 
 			List<Map<String, Object>> articleRows = DBUtil.selectRows(conn, sql);
