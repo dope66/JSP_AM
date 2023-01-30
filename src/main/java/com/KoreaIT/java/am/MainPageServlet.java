@@ -1,6 +1,16 @@
 package com.KoreaIT.java.am;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import com.KoreaIT.java.am.config.Config;
+import com.KoreaIT.java.am.exception.SQLErrorException;
+import com.KoreaIT.java.am.util.DBUtil;
+import com.KoreaIT.java.am.util.SecSql;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,18 +23,22 @@ public class MainPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		HttpSession session = request.getSession();
-		boolean isLogined =false;
-		int loginedMemberId  = -1;
-		if(session.getAttribute("loginedMemberLoginId")!=null) {
-			loginedMemberId = (int)session.getAttribute("loginedMemberId");
-			isLogined=true;
-		}
-		request.setAttribute("isLogined", isLogined);
-		request.setAttribute("loginedMemberId", loginedMemberId);
-		
-		request.getRequestDispatcher("/jsp/home/main.jsp").forward(request, response);
+		response.setContentType("text/html; charset=UTF-8");
+
+			HttpSession session = request.getSession();
+			
+			boolean isLogined =false;
+			int loginedMemberId  = -1;
+			String loginedMemberName =(String)session.getAttribute("loginedMemberName");
+			if(session.getAttribute("loginedMemberLoginId")!=null) {
+				loginedMemberId = (int)session.getAttribute("loginedMemberId");
+				isLogined=true;
+			}
+			request.setAttribute("isLogined", isLogined);
+			request.setAttribute("loginedMemberId", loginedMemberId);
+			request.setAttribute("loginedMemberName", loginedMemberName);
+			
+			request.getRequestDispatcher("/jsp/home/main.jsp").forward(request, response);
 		
 	}
 	@Override

@@ -22,11 +22,6 @@ public class ArticleDoWriteServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		HttpSession session = request.getSession();
-		if(session.getAttribute("loginedMemberId")==null) {
-			response.getWriter().append(String.format("<script>alert('로그인 후 이용해주세요.'); location.replace('../member/login');</script>"));
-		}
-			
 
 
 		Connection conn = null;
@@ -39,6 +34,7 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
 
 		try {
+			HttpSession session = request.getSession();
 			
 			conn = DriverManager.getConnection(Config.getDBUrl(),Config.getDBUser(),Config.getDBPassword());
 			String title = request.getParameter("title");

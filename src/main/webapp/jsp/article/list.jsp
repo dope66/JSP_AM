@@ -17,8 +17,13 @@ int totalPage = (int) request.getAttribute("totalPage");
 <body>
 
 	<h1>게시물 리스트</h1>
+	<%@ include file="../part/topBar.jsp"%>
 	<div>
 		<a href="write">글쓰기</a>
+	</div>
+
+	<div>
+		<a href="../home/main">메인으로 돌아가기</a>
 	</div>
 
 	<table border="2" bordercolor="green">
@@ -39,7 +44,7 @@ int totalPage = (int) request.getAttribute("totalPage");
 			<td><%=(int) articleRow.get("id")%></td>
 			<td><%=(LocalDateTime) articleRow.get("regDate")%></td>
 			<td><a href="detail?id=<%=(int) articleRow.get("id")%>"><%=(String) articleRow.get("title")%></a></td>
-			<td><%= articleRow.get("writerName")%></td>
+			<td><%=articleRow.get("writerName")%></td>
 
 		</tr>
 		<%
